@@ -447,7 +447,7 @@ if prompt:
     # Generate assistant response
     # --------------------------------------------------------
 
-    with st.chat_message("assistant", avatar="✦"):
+    with st.chat_message("assistant"):
 
         with st.spinner("Thinking..."):
 
