@@ -11,214 +11,224 @@ from api import (
 # PAGE CONFIGURATION
 # ============================================================
 
-st.set_page_config(
-    page_title="AI Assistant",
-    page_icon="🤖",
-    layout="wide",
-    initial_sidebar_state="expanded",
-)
-
-
-# ============================================================
-# CUSTOM CSS
-# ============================================================
-
-CUSTOM_CSS = """
+st.markdown("""
 <style>
-    /* ---------- Global ---------- */
 
-    .stApp {
-        background: #0e1117;
-    }
+/* ================================
+   GLOBAL APP
+================================ */
 
-    .main .block-container {
-        max-width: 1100px;
-        padding-top: 2rem;
-        padding-bottom: 7rem;
-    }
+.stApp {
+    background-color: #FFFFFF;
+    color: #1F1F1F;
+}
 
-    /* ---------- Header ---------- */
+/* Main content area */
+.main .block-container {
+    max-width: 1100px;
+    padding-top: 2rem;
+    padding-bottom: 7rem;
+}
 
-    .app-header {
-        padding: 0.5rem 0 1.5rem 0;
-        margin-bottom: 1rem;
-    }
 
-    .app-title {
-        font-size: 2.2rem;
-        font-weight: 700;
-        letter-spacing: -0.03em;
-        margin-bottom: 0.25rem;
-    }
+/* ================================
+   SIDEBAR
+================================ */
 
-    .app-subtitle {
-        color: #9ca3af;
-        font-size: 0.98rem;
-        margin-top: 0;
-    }
+section[data-testid="stSidebar"] {
+    background-color: #F7F7F8;
+    border-right: 1px solid #E5E7EB;
+}
 
-    .provider-badge {
-        display: inline-block;
-        margin-top: 0.75rem;
-        padding: 0.3rem 0.7rem;
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.06);
-        border: 1px solid rgba(255, 255, 255, 0.09);
-        color: #d1d5db;
-        font-size: 0.78rem;
-        font-weight: 500;
-    }
+section[data-testid="stSidebar"] * {
+    color: #1F1F1F;
+}
 
-    /* ---------- Empty State ---------- */
 
-    .empty-state {
-        text-align: center;
-        padding: 6rem 1rem 4rem 1rem;
-    }
+/* ================================
+   CHAT MESSAGES
+================================ */
 
-    .empty-icon {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-    }
+[data-testid="stChatMessage"] {
+    background-color: transparent;
+    border: none;
+    padding: 1rem 0;
+}
 
-    .empty-title {
-        font-size: 1.8rem;
-        font-weight: 650;
-        margin-bottom: 0.6rem;
-    }
 
-    .empty-description {
-        color: #9ca3af;
-        font-size: 1rem;
-        line-height: 1.7;
-        max-width: 600px;
-        margin: 0 auto;
-    }
+/* User message */
 
-    /* ---------- Sidebar ---------- */
+[data-testid="stChatMessage"]:has(
+    [data-testid="chatAvatarIcon-user"]
+) {
+    background-color: #F4F4F5;
+    border-radius: 14px;
+    padding: 1rem 1.2rem;
+    margin: 0.5rem 0;
+}
 
-    section[data-testid="stSidebar"] {
-        background: #0a0d12;
-        border-right: 1px solid rgba(255, 255, 255, 0.07);
-    }
 
-    .sidebar-brand {
-        padding: 0.5rem 0 1.5rem 0;
-    }
+/* Assistant message */
 
-    .sidebar-brand-title {
-        font-size: 1.15rem;
-        font-weight: 700;
-    }
+[data-testid="stChatMessage"]:has(
+    [data-testid="chatAvatarIcon-assistant"]
+) {
+    background-color: #FFFFFF;
+    padding: 1rem 1.2rem;
+    margin: 0.5rem 0;
+}
 
-    .sidebar-brand-subtitle {
-        color: #8b949e;
-        font-size: 0.78rem;
-        margin-top: 0.2rem;
-    }
 
-    .sidebar-section {
-        margin-top: 1.5rem;
-        margin-bottom: 0.7rem;
-        color: #8b949e;
-        text-transform: uppercase;
-        font-size: 0.7rem;
-        font-weight: 700;
-        letter-spacing: 0.08em;
-    }
+/* ================================
+   CHAT TEXT
+================================ */
 
-    .info-card {
-        padding: 0.8rem;
-        border: 1px solid rgba(255, 255, 255, 0.07);
-        border-radius: 0.75rem;
-        background: rgba(255, 255, 255, 0.025);
-        margin-bottom: 0.6rem;
-    }
+[data-testid="stChatMessage"] p {
+    color: #1F1F1F;
+    line-height: 1.65;
+    font-size: 15px;
+}
 
-    .info-label {
-        color: #8b949e;
-        font-size: 0.72rem;
-        margin-bottom: 0.2rem;
-    }
 
-    .info-value {
-        color: #e5e7eb;
-        font-size: 0.86rem;
-        font-weight: 600;
-        word-break: break-word;
-    }
+/* Headings inside responses */
 
-    .about-text {
-        color: #8b949e;
-        font-size: 0.8rem;
-        line-height: 1.6;
-    }
+[data-testid="stChatMessage"] h1,
+[data-testid="stChatMessage"] h2,
+[data-testid="stChatMessage"] h3 {
+    color: #111827;
+}
 
-    /* ---------- Buttons ---------- */
 
-    .stButton > button {
-        width: 100%;
-        border-radius: 0.7rem;
-        min-height: 2.5rem;
-        font-weight: 600;
-        transition: all 0.15s ease;
-    }
+/* ================================
+   CHAT INPUT
+================================ */
 
-    /* ---------- Chat ---------- */
+[data-testid="stChatInput"] {
+    background-color: #FFFFFF;
+}
 
-    [data-testid="stChatMessage"] {
-        padding-top: 1rem;
-        padding-bottom: 1rem;
-    }
+[data-testid="stChatInput"] > div {
+    background-color: #FFFFFF;
+    border: 1px solid #D1D5DB;
+    border-radius: 14px;
+}
 
-    [data-testid="stChatMessageContent"] {
-        line-height: 1.7;
-    }
+[data-testid="stChatInput"] textarea {
+    color: #1F1F1F !important;
+    background-color: #FFFFFF !important;
+}
 
-    [data-testid="stChatMessageContent"] p {
-        margin-bottom: 0.7rem;
-    }
+[data-testid="stChatInput"] textarea::placeholder {
+    color: #9CA3AF !important;
+}
 
-    [data-testid="stChatMessageContent"] code {
-        border-radius: 0.35rem;
-    }
 
-    [data-testid="stChatMessageContent"] pre {
-        border-radius: 0.7rem;
-    }
+/* ================================
+   BUTTONS
+================================ */
 
-    /* ---------- Chat Input ---------- */
+.stButton > button {
+    background-color: #FFFFFF;
+    color: #1F1F1F;
+    border: 1px solid #D1D5DB;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
 
-    [data-testid="stChatInput"] {
-        padding-bottom: 1rem;
-    }
+.stButton > button:hover {
+    background-color: #F3F4F6;
+    border-color: #9CA3AF;
+}
 
-    /* ---------- Dividers ---------- */
 
-    hr {
-        border-color: rgba(255, 255, 255, 0.07);
-    }
+/* ================================
+   PRIMARY BUTTON
+================================ */
 
-    /* ---------- Mobile ---------- */
+.stButton > button[kind="primary"] {
+    background-color: #1F2937;
+    color: #FFFFFF;
+    border: none;
+}
 
-    @media (max-width: 768px) {
-        .main .block-container {
-            padding-left: 1rem;
-            padding-right: 1rem;
-        }
+.stButton > button[kind="primary"]:hover {
+    background-color: #111827;
+}
 
-        .app-title {
-            font-size: 1.7rem;
-        }
 
-        .empty-state {
-            padding-top: 4rem;
-        }
-    }
+/* ================================
+   SELECTBOX
+================================ */
+
+div[data-baseweb="select"] > div {
+    background-color: #FFFFFF;
+    border-color: #D1D5DB;
+    color: #1F1F1F;
+}
+
+
+/* ================================
+   EXPANDERS
+================================ */
+
+[data-testid="stExpander"] {
+    background-color: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 10px;
+}
+
+
+/* ================================
+   MARKDOWN / GENERAL TEXT
+================================ */
+
+.stMarkdown {
+    color: #1F1F1F;
+}
+
+
+/* ================================
+   CODE BLOCKS
+================================ */
+
+[data-testid="stCodeBlock"] {
+    border: 1px solid #E5E7EB;
+    border-radius: 10px;
+}
+
+
+/* ================================
+   DIVIDERS
+================================ */
+
+hr {
+    border-color: #E5E7EB;
+}
+
+
+/* ================================
+   SCROLLBAR
+================================ */
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background: #FFFFFF;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #D1D5DB;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #9CA3AF;
+}
+
 </style>
-"""
-
-st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
+""", unsafe_allow_html=True)
 
 
 # ============================================================
