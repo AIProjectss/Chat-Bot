@@ -923,35 +923,21 @@ visible_messages = [
 
 if not visible_messages:
 
-    st.markdown(
-        """
-        <div class="empty-state">
+   st.markdown(
+    """
+    <div class="empty-title">
+        Welcome to AI Assistant
+    </div>
 
-            <div class="empty-icon">
-                ✦
-            </div>
-
-            <div class="empty-title">
-                Welcome to AI Assistant
-            </div>
-
-            <div class="empty-description">
-
-                Ask anything — from programming and
-                science to writing, research and
-                everyday questions.
-
-                <br><br>
-
-                How can I help you today?
-
-            </div>
-
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
+    <div class="empty-description">
+        Ask anything — from programming and science
+        to writing, research and everyday questions.
+        <br><br>
+        How can I help you today?
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 # ============================================================
 # RENDER CHAT
