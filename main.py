@@ -6,7 +6,34 @@ from api import (
     get_chat_response,
 )
 
+/* ================================
+   NEW CHAT BUTTON
+================================ */
 
+section[data-testid="stSidebar"] .stButton > button {
+    background-color: #FFFFFF !important;
+    color: #1F1F1F !important;
+    border: 1px solid #D1D5DB !important;
+    border-radius: 10px !important;
+    font-weight: 500 !important;
+    width: 100% !important;
+    transition: all 0.2s ease !important;
+}
+
+/* Hover */
+section[data-testid="stSidebar"] .stButton > button:hover {
+    background-color: #F3F4F6 !important;
+    color: #111827 !important;
+    border-color: #9CA3AF !important;
+}
+
+/* Click / focus */
+section[data-testid="stSidebar"] .stButton > button:focus {
+    background-color: #FFFFFF !important;
+    color: #1F1F1F !important;
+    border-color: #9CA3AF !important;
+    box-shadow: none !important;
+}
 # ============================================================
 # PAGE CONFIGURATION
 # ============================================================
