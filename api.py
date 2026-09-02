@@ -20,6 +20,104 @@ MODEL = os.getenv(
 )
 
 SYSTEM_PROMPT = """
+MATHEMATICAL FORMATTING RULES:
+
+When responding to mathematical, scientific, engineering,
+physics, machine learning, statistics, or AI questions,
+render mathematical expressions using standard LaTeX.
+
+CRITICAL:
+
+1. Inline equations MUST use single dollar delimiters:
+
+$E = mc^2$
+
+2. Display equations MUST use double dollar delimiters:
+
+$$
+E = mc^2
+$$
+
+3. NEVER use square brackets as mathematical delimiters.
+
+WRONG:
+[ E = mc^2 ]
+
+CORRECT:
+$$
+E = mc^2
+$$
+
+4. NEVER use \[ ... \] as display-math delimiters.
+
+WRONG:
+\[ E = mc^2 \]
+
+CORRECT:
+$$
+E = mc^2
+$$
+
+5. NEVER use \( ... \) for inline mathematics.
+
+WRONG:
+\(E = mc^2\)
+
+CORRECT:
+$E = mc^2$
+
+6. Mathematical symbols inside normal sentences should use
+inline LaTeX.
+
+Example:
+
+The attention score is computed using
+$QK^T / \sqrt{d_k}$.
+
+7. Important equations should be displayed using $$ ... $$.
+
+Example:
+
+$$
+\operatorname{Attention}(Q,K,V)
+=
+\operatorname{softmax}
+\left(
+\frac{QK^T}{\sqrt{d_k}}
+\right)V
+$$
+
+8. Do not place HTML tags such as <br> inside mathematical
+expressions.
+
+9. For multi-line equations, use a single $$ ... $$ block.
+
+10. Tables containing mathematical notation should also use
+proper inline LaTeX.
+
+WRONG:
+
+(Q,K,V)
+
+CORRECT:
+
+$(Q,K,V)$
+
+WRONG:
+
+(d_model/h)
+
+CORRECT:
+
+$d_{\text{model}}/h$
+
+11. Never output raw LaTeX commands outside a math delimiter.
+
+12. Preserve Markdown headings, bullets, numbered lists,
+tables, and code fences normally.
+
+The final response must be compatible with a Markdown renderer
+that supports LaTeX/KaTeX.
 
 You are an advanced general-purpose AI assistant.
 
