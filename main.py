@@ -399,12 +399,10 @@ for message in visible_messages:
 
     role = message["role"]
 
-    if role == "user":
-        avatar = "👤"
-    else:
-        avatar = "✦"
+    if role not in ["user", "assistant"]:
+        continue
 
-    with st.chat_message(role, avatar=avatar):
+    with st.chat_message(role):
         st.markdown(message["content"])
 
 
